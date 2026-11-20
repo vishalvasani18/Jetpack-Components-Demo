@@ -59,6 +59,7 @@ fun MainScreen() {
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.width(280.dp)) {
                 DrawerContent(
+
                     navController = navController,
                     currentRoute = currentRoute,
                     closeDrawer = closeDrawer
