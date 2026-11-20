@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_welcome">स्वागत</string>
+    <string name="title_home">होम</string>
+    <string name="title_settings">सेटिंग्स</string>
+    <string name="title_about">अबाउट</string>
+    <string name="title_info">जानकारी</string>
+    <string name="app_name">मेरा ऐप</string>
+    <string name="title_posts">पोस्ट सूची</string>
+    <string name="title_comments">कमेंट सूची</string>
+    <string name="title_albums">एल्बम सूची</string>
+    <string name="title_photos">फोटो सूची</string>
+    <string name="title_todo">टूडू सूची</string>
+    <string name="title_users">यूज़र सूची</string>
+    <string name="title_language_setting">भाषा सेटिंग</string>
+    <string name="save">बचाएँ</string>
+
+    <string name="language_setting">भाषा सेटिंग्स</string>
+    <string name="dark_mode">डार्क मोड</string>
+
+    <string name="english">English</string>
+    <string name="hindi">हिंदी</string>
+
+
+</resources>

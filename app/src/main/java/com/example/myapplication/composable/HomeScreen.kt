@@ -12,17 +12,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.R
+import com.example.myapplication.model.DrawerScreen
 
 @Composable
 fun HomeScreen(onItemClick: (String) -> Unit) {
 
     // Sample data: 6 items
     val itemsList = listOf(
-        "Posts", "Comments",
-        "Albums", "Photos",
-        "Todos", "Users"
+        DrawerScreen.Posts.route to stringResource(R.string.title_posts),
+        DrawerScreen.Comments.route to stringResource(R.string.title_comments),
+        DrawerScreen.Albums.route to stringResource(R.string.title_albums),
+        DrawerScreen.Photos.route to stringResource(R.string.title_photos),
+        DrawerScreen.Todos.route to stringResource(R.string.title_todo),
+        DrawerScreen.Users.route to stringResource(R.string.title_users)
     )
+
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -30,10 +37,10 @@ fun HomeScreen(onItemClick: (String) -> Unit) {
             .fillMaxSize()
             .padding(16.dp),
         content = {
-            items(itemsList) { item ->
+            items(itemsList) {(route,title)->
                 GridItem(
-                    title = item,
-                    onClick = { onItemClick(item)}
+                    title = title,
+                    onClick = { onItemClick(route)}
                 )
             }
         }

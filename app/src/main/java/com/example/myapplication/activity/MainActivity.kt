@@ -1,10 +1,10 @@
 package com.example.myapplication.activity
 
-import MainScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.example.myapplication.composable.MainScreen
 import com.example.myapplication.model.DataStoreManager
 import com.example.myapplication.viewmodel.MainViewModel
 import com.example.myapplication.viewmodel.MainViewModelFactory

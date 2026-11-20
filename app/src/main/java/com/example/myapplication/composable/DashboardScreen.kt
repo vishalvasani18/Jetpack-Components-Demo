@@ -1,3 +1,6 @@
+package com.example.myapplication.composable
+
+import HomeScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -11,11 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.*
 import com.example.myapplication.R
-import com.example.myapplication.composable.AboutUsScreen
-import com.example.myapplication.composable.DrawerContent
-import com.example.myapplication.composable.InfoScreen
-import com.example.myapplication.composable.PostListScreen
-import com.example.myapplication.composable.SettingsScreen
 import com.example.myapplication.model.DrawerScreen
 import kotlinx.coroutines.launch
 
@@ -28,18 +26,30 @@ fun MainScreen() {
     val navController = rememberNavController()
 
     // Current route
-    val currentRoute =
-        navController.currentBackStackEntryAsState().value?.destination?.route
-
+    val currentRoute by navController
+        .currentBackStackEntryAsState()
+        .let { entry ->
+            androidx.compose.runtime.derivedStateOf {
+                entry.value?.destination?.route
+            }
+        }
     // Close drawer lambda
     val closeDrawer: () -> Unit = { scope.launch { drawerState.close() } }
 
     // Determine toolbar title dynamically
-    val titleRes = when (currentRoute) {
+    val currentScreen = when (currentRoute) {
         DrawerScreen.Home.route -> R.string.title_home
         DrawerScreen.Settings.route -> R.string.title_settings
         DrawerScreen.About.route -> R.string.title_about
         DrawerScreen.Info.route -> R.string.title_info
+        DrawerScreen.Posts.route -> R.string.title_posts
+        DrawerScreen.Comments.route -> R.string.title_comments
+        DrawerScreen.Albums.route -> R.string.title_albums
+        DrawerScreen.Photos.route -> R.string.title_photos
+        DrawerScreen.Todos.route -> R.string.title_todo
+        DrawerScreen.Users.route -> R.string.title_users
+        DrawerScreen.Language.route -> R.string.title_language_setting
+
         else -> R.string.app_name
     }
 
@@ -59,9 +69,9 @@ fun MainScreen() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(id = titleRes)) },
+                    title = { Text(stringResource(id = currentScreen)) },
                     navigationIcon = {
-                        if (currentRoute == DrawerScreen.Info.route) {
+                        if (currentRoute == DrawerScreen.Info.route || currentRoute == DrawerScreen.Posts.route || currentRoute == DrawerScreen.Comments.route || currentRoute == DrawerScreen.Albums.route || currentRoute == DrawerScreen.Photos.route || currentRoute == DrawerScreen.Users.route || currentRoute == DrawerScreen.Language.route) {
                             IconButton(onClick = { navController.popBackStack() }) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -100,18 +110,59 @@ fun MainScreen() {
             ) {
                 composable(DrawerScreen.Home.route) {
                     HomeScreen(
-                        onItemClick = { item ->
-                            if (item == "Posts") {
-                                navController.navigate("Posts")
+                        onItemClick ={ route ->
+                            navController.navigate(route)
+                        }
+                    )
+                }
+
+                composable(DrawerScreen.Posts.route) {
+                    PostListScreen()
+                }
+
+                composable(DrawerScreen.Comments.route) {
+                    CommentsListScreen()
+                }
+
+                composable(DrawerScreen.Albums.route) {
+                    AlbumListScreen()
+                }
+
+                composable(DrawerScreen.Photos.route) {
+                    PhotosListScreen()
+                }
+
+                composable(DrawerScreen.Todos.route) {
+                    TodoListScreen()
+                }
+
+                composable(DrawerScreen.Users.route) {
+                    UserListScreen()
+                }
+
+                // IMPORTANT: Settings must be here
+                composable(DrawerScreen.Settings.route) {
+                    SettingsScreen(
+                        onLanguageClick = {
+                            navController.navigate(DrawerScreen.Language.route)
+                        }
+                    )
+                }
+
+                // Language
+                composable(DrawerScreen.Language.route) {
+                    LanguageScreen(
+                        onLanguageSaved = {
+                            navController.navigate(DrawerScreen.Settings.route) {
+                                popUpTo(DrawerScreen.Settings.route) {
+                                    inclusive = false
+                                }
+                                launchSingleTop = true
                             }
                         }
                     )
                 }
 
-                composable("Posts") {
-                    PostListScreen()
-                }
-                composable(DrawerScreen.Settings.route) { SettingsScreen() }
                 composable(DrawerScreen.About.route) { AboutUsScreen() }
                 composable(DrawerScreen.Info.route) { InfoScreen() }
             }

@@ -10,8 +10,10 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.myapplication.R
 import com.example.myapplication.model.DrawerScreen
 
 @Composable
@@ -25,13 +27,13 @@ fun DrawerContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Welcome",
+            text = stringResource(R.string.title_welcome),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(16.dp)
         )
 
         DrawerItem(
-            title = "Home",
+            title = stringResource(R.string.title_home),
             selected = currentRoute == DrawerScreen.Home.route,
             {
                 navController.navigate(DrawerScreen.Home.route) {
@@ -42,7 +44,7 @@ fun DrawerContent(
         )
 
         DrawerItem(
-            title = "Settings",
+            title = stringResource(R.string.title_settings),
             selected = currentRoute == DrawerScreen.Settings.route
         ) {
             navController.navigate(DrawerScreen.Settings.route) {
@@ -52,7 +54,7 @@ fun DrawerContent(
         }
 
         DrawerItem(
-            title = "About",
+            title = stringResource(R.string.title_about),
             selected = currentRoute == DrawerScreen.About.route
         ) {
             navController.navigate(DrawerScreen.About.route) {
